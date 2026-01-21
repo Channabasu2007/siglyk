@@ -1,26 +1,99 @@
+@config "../tailwind.config.js";
 @import "tailwindcss";
 
+/* ================================
+   Design tokens (CSS variables)
+================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --light-primary: #ffffff;   /* white */
+  --light-secondary: #7f20df; /* purple-600 */
+  --dark-primary: #000000;    /* black */
+  --dark-secondary: #581c87;  /* purple-900 */
+
+  /* Text */
+  --light-primary: #ffffff;   /* white */
+  --light-secondary: #7f20df; /* purple-600 */
+  --dark-primary: #000000;    /* black */
+  --dark-secondary: #581c87;  /* purple-900 */
+
+  --font-sans: "Lexend", system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ================================
+   Base styles
+================================ */
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--light-primary);
+    color: var(--text-dark-primary);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ================================
+   Lexend font
+================================ */
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-display: swap;
+}
+/* ---------- Custom Scrollbar ---------- */
+@layer base {
+  :root {
+    /* For Firefox: Sets (Thumb Color, Track Color) */
+    scrollbar-color: #7f20df #ffffff; /* Thumb: purple-600, Track: white */
+    scrollbar-width: thin;
+  }
+
+  /* For Chrome, Edge, and Safari */
+  ::-webkit-scrollbar {
+    width: 8px; /* Width of the entire scrollbar */
+    height: 8px; /* Height for horizontal scrollbar */
+    color: #7f20df;
+  }
+
+  /* The track (background) of the scrollbar */
+  ::-webkit-scrollbar-track {
+    background: #ffffff; /* White track */
+  }
+
+  /* The draggable scrolling handle */
+  ::-webkit-scrollbar-thumb {
+    background: #7f20df; /* Purple-600 thumb */
+    border-radius: 10px; /* Makes the scrollbar rounded */
+    border: 2px solid #ffffff; /* Creates padding effect around thumb */
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    filter: brightness(0.9);
+    background: #6d1bc7; /* Slightly darker purple on hover */
+  }
 }

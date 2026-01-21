@@ -1,0 +1,23 @@
+[
+  {
+    "initials": "SC",
+    "name": "Sarah Chen",
+    "role": "Software Engineer",
+    "quote": "Siglyk has completely changed my daily work life. I can now participate in meetings without feeling isolated or needing a physical interpreter present at all times.",
+    "rating": 5
+  },
+  {
+    "initials": "MJ",
+    "name": "Mark Johnson",
+    "role": "Frequent Traveler",
+    "quote": "Traveling used to be stressful, but Siglyk makes it so much easier to communicate with locals in airports and hotels. The accuracy is mind-blowing.",
+    "rating": 5
+  },
+  {
+    "initials": "ER",
+    "name": "Elena Rodriguez",
+    "role": "Student",
+    "quote": "The best part is the privacy. Knowing my conversations aren't being stored while getting such high-quality translation is a game changer for me.",
+    "rating": 5
+  }
+]

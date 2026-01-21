@@ -1,0 +1,22 @@
+[
+    {
+        "icon" : "psychology",
+        "name" : "AI Accuracy",
+        "description" : "State-of-the-art neural networks trained on millions of gestures for industry-leading recognition."
+    },
+    {
+        "icon" : "bolt",
+        "name" : "Low Latency",
+        "description" : "Sub-100ms processing speed ensures your conversations flow naturally without awkward pauses."
+    },
+    {
+        "icon" : "devices",
+        "name" : "Cross-Platform",
+        "description" : "Available on Web, soon on Android and IOS. Start a conversation on one device and continue on another."
+    },
+    {
+        "icon" : "shield",
+        "name" : "Privacy First",
+        "description" : "End-to-end encryption for all video streams. We never store your personal conversations."
+    }
+]
