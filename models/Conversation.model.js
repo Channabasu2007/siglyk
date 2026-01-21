@@ -9,7 +9,8 @@ const conversationSchema = new mongoose.Schema({
     messages: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'Message',
         index: true
-    }]
+    }],
+    signLanguageUsed: { type: String  },
 }, { timestamps: true });
 
 export default mongoose.models.Conversation || mongoose.model('Conversation', conversationSchema);

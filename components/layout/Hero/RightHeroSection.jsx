@@ -20,8 +20,8 @@ const RightHeroSection = () => {
             </div>
 
             {/* Floating Translation Card */}
-            <div className="absolute z-30 bottom-4 left-2 right-2 md:left-6 md:right-6 bg-white/90 backdrop-blur-md rounded-xl p-3 shadow-xl border border-light-secondary/20 flex items-center gap-3">
-                <div className="shrink-0 w-10 h-10 rounded-lg bg-light-secondary flex items-center justify-center text-white">
+            <div className="absolute z-30 bottom-4 left-2 right-2 md:left-6 md:right-6 bg-light-primary/90 backdrop-blur-md rounded-xl p-3 shadow-xl border border-light-secondary/20 flex items-center gap-3">
+                <div className="shrink-0 w-10 h-10 rounded-lg bg-light-secondary flex items-center justify-center text-light-primary ">
                     <span className="material-symbols-outlined text-xl">sign_language</span>
                 </div>
 
@@ -34,9 +34,9 @@ const RightHeroSection = () => {
                 </div>
 
                 <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 bg-light-secondary/30 rounded-full animate-pulse" />
-                    <span className="w-1.5 h-1.5 bg-light-secondary/30 rounded-full animate-pulse [animation-delay:0.2s]" />
-                    <span className="w-1.5 h-1.5 bg-light-secondary/30 rounded-full animate-pulse [animation-delay:0.4s]" />
+                    <span className="w-1.5 h-1.5 bg-light-secondary/40 rounded-full animate-pulse" />
+                    <span className="w-1.5 h-1.5 bg-light-secondary/40 rounded-full animate-pulse [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 bg-light-secondary/40 rounded-full animate-pulse [animation-delay:0.4s]" />
                 </div>
             </div>
         </div>

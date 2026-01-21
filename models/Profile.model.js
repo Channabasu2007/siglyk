@@ -5,6 +5,7 @@ const profileSchema = new mongoose.Schema({
     username : { type: String, required: true },
     nationality: { type: String },
     preference : { type: String, enum: ['Speech', 'Sign'] },
+    preferredSignLanguage : { type: String  },
 }, { timestamps: true });
 
 

@@ -6,12 +6,10 @@ import Highlights from '@/components/layout/LandingOther/Highlights'
 import Testimonials from '@/components/layout/LandingOther/Testimonials'
 import CTA from '@/components/layout/LandingOther/CTA'
 
-const page = () => {
-  const handlebtn=()=>{
-    alert("Button Clicked")
-  }
+
+const Page = () => {
   return (
-    <main className=''>
+    <main>
       <Hero />
       <Stats />
       <Highlights />
@@ -21,4 +19,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page;
