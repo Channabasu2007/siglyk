@@ -1,4 +1,5 @@
 import Image from "next/image";
+import heroImage from "@/public/Images/HeroRight.png";
 
 const RightHeroSection = () => {
     return (
@@ -9,8 +10,7 @@ const RightHeroSection = () => {
                 <div className="absolute inset-0 z-20 pointer-events-none opacity-20 bg-[radial-gradient(#7c3aed_1px,transparent_1px)] bg-size-[15px_15px]" />
                 
                 <Image
-                    src="/images/HeroRight.png"
-                    /* Added descriptive alt text for industry standard accessibility */
+                    src={heroImage} 
                     alt="A woman smiling and using sign language while working on a laptop, demonstrating Siglyk translation"
                     width={500}
                     height={500}

@@ -1,22 +1,27 @@
 "use client";
 import React from "react";
 
-const SecondaryButton = ({ label, onClick, className = "" }) => {
+const SecondaryButton = ({ label, icon, onClick, type = "button", className = "" , ...props}) => {
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`
-        flex h-10 min-w-21 items-center justify-center
+        flex h-10 min-w-21 items-center justify-center gap-2
         rounded-lg px-4
-        bg-gray-200 text-light-secondary
+        bg-light-primary text-light-secondary
         text-sm font-bold tracking-[0.015em]
         transition-all
-        hover:bg-gray-300
+        hover:brightness-95
         active:scale-95
-        border border-light-secondary
+        border border-light-secondary/30
+        cursor-pointer
+        disabled:opacity-50 disabled:cursor-not-allowed
         ${className}`}
+        {...props}
     >
-      {label}
+      {icon && <span className="flex items-center justify-center">{icon}</span>}
+      {label && <span>{label}</span>}
     </button>
   );
 };

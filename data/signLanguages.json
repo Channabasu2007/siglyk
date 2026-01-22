@@ -1,0 +1,12 @@
+[
+  { "id": "ISL", "label": "Indian Sign Language (ISL)" },
+  { "id": "ASL", "label": "American Sign Language (ASL)" },
+  { "id": "BSL", "label": "British Sign Language (BSL)" },
+  { "id": "FSL", "label": "French Sign Language (LSF)" },
+  { "id": "KSL", "label": "Korean Sign Language (KSL)" },
+  { "id": "Auslan", "label": "Australian Sign Language (Auslan)" },
+  { "id": "JSL", "label": "Japanese Sign Language (JSL)" },
+  { "id": "LSM", "label": "Mexican Sign Language (LSM)" },
+  { "id": "SASL", "label": "South African Sign Language (SASL)" },
+  { "id": "GSL", "label": "German Sign Language (DGS)" }
+]

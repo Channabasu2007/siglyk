@@ -26,7 +26,7 @@ export const registrationSchema = z.object({
     confirmPassword: z.string(),
     role: z.enum(['INDIVIDUAL', 'ORG_ADMIN', 'ORG_EMPLOYEE']).default('INDIVIDUAL'),
     orgId: z.string().optional().nullable(), // For employees joining a company
-
+    gender : z.enum(['Male', ' Female', 'Other']).optional(),
     // From Profile Model
     username: z.string()
         .min(3, "Username must be at least 3 characters")

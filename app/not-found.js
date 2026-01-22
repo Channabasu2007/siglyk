@@ -1,3 +1,4 @@
+import PrimaryButton from '@/components/Buttons/PrimaryButton';
 import Link from 'next/link';
 import React from 'react';
 
@@ -9,7 +10,7 @@ const NotFound = () => {
         
         {/* Large Visual 404 */}
         <div className="relative mb-8">
-            <h1 className="text-[12rem] font-black leading-none text-light-secondary/5 opacity-50">
+            <h1 className="text-[12rem] font-black leading-none text-light-secondary/20 opacity-50">
                 404
             </h1>
             <div className="absolute inset-0 flex items-center justify-center">
@@ -31,9 +32,7 @@ const NotFound = () => {
         {/* Back Home Button */}
         <div className="mt-10">
           <Link href="/">
-            <button className="flex h-14 min-w-50 cursor-pointer items-center justify-center rounded-xl bg-light-secondary px-10 text-lg font-bold text-white shadow-xl shadow-light-secondary/20 transition-all hover:scale-105 active:scale-95">
-              Back to Home
-            </button>
+            <PrimaryButton label="Back to Home" className='scale-120' />
           </Link>
         </div>
       </div>
