@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from 'react';
-import PrimaryButton from '../Buttons/PrimaryButton';
-import SecondaryButton from '../Buttons/SecondaryButton';
+import PrimaryButton from '../buttons/PrimaryButton';
+import SecondaryButton from '../buttons/SecondaryButton';
 import Loader from '@/components/ui/Loader';
+import { handleGoogleSignIn } from '@/controllers/authQuickActions.controller';
 
 const EmailRequest = ({ onEmailSent, initialEmail = "" }) => {
     const [email, setEmail] = useState(initialEmail);
@@ -13,7 +14,24 @@ const EmailRequest = ({ onEmailSent, initialEmail = "" }) => {
         e.preventDefault();
         setIsLoading(true);
         setError("");
-        onEmailSent(email);
+        try {
+            const res = await fetch("/api/otp/send", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email })
+            })
+            if (!res.ok) {
+                setError((await res.json()).error || "Failed to send verification code. Please try again.");
+                return;
+            }
+            onEmailSent(email);
+        } catch (err) {
+            setError(err.message || "Failed to send verification code. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     if (isLoading) return <Loader />;
@@ -63,6 +81,7 @@ const EmailRequest = ({ onEmailSent, initialEmail = "" }) => {
                     <p className="text-sm text-light-secondary/70 mb-4 font-medium">Or sign up with</p>
                     <div className="flex gap-4 justify-center">
                         <SecondaryButton
+                            onClick={() => handleGoogleSignIn('/translation')}
                             className="flex-1 h-12 flex items-center justify-center gap-2"
                             label="Google"
                             icon={

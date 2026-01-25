@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import PrimaryButton from '../../Buttons/PrimaryButton';
+import PrimaryButton from '../../buttons/PrimaryButton';
 import Loader from '@/components/ui/Loader';
 
 const RequestReset = ({ onEmailSent }) => {
@@ -11,8 +11,25 @@ const RequestReset = ({ onEmailSent }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-        console.log("Submitting email for password reset:", email);
-        onEmailSent(email);
+        setIsLoading(true)
+        try {
+            const res = await fetch("/api/forgotPassword/requestOtp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                setError(data.message || "Failed to send reset code. Please try again.");
+            }
+
+            onEmailSent(email);
+        } catch (error) {
+            setError(error.message || "Failed to send reset code. Please try again.");
+        }finally{
+            setIsLoading(false)
+        }
     };
 
     if (isLoading) return <Loader />;
@@ -29,7 +46,7 @@ const RequestReset = ({ onEmailSent }) => {
                         <label className="text-dark-primary text-sm font-medium">Email Address</label>
                         <div className="relative">
                             <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-light-secondary/50">mail</span>
-                            <input 
+                            <input
                                 type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
                                 className="w-full rounded-lg border border-light-secondary/30 h-14 pl-12 pr-4 text-base focus:ring-2 focus:ring-light-secondary/20"
                                 placeholder="name@example.com"

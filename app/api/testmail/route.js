@@ -1,4 +1,4 @@
-import sendEmailVerification from "@/controllers/email/emailVerification.controller";
+import sendEmailVerification from "@/controllers/emailVerification.controller";
 
 export async function POST(request) {
     const { email, otp, name, type } = await request.json();

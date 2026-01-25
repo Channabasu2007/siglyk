@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from 'react';
-import RequestReset from '@/components/Auth/Forgot/RequestReset';
-import ResetOTP from '@/components/Auth/Forgot/ResetOtp';
-import NewPassword from '@/components/Auth/Forgot/NewPassword';
+import RequestReset from '@/components/auth/Forgot/RequestReset';
+import ResetOTP from '@/components/auth/Forgot/verifyOtp';
+import NewPassword from '@/components/auth/Forgot/NewPassword';
 
 const ForgotPasswordPage = () => {
     const [step, setStep] = useState(1);
@@ -15,6 +15,7 @@ const ForgotPasswordPage = () => {
 
     const handleOTPVerified = (otp) => {
         setResetData(prev => ({ ...prev, otp }));
+        
         setStep(3);
     };
 
@@ -22,17 +23,17 @@ const ForgotPasswordPage = () => {
         <div className="min-h-screen bg-light-primary flex flex-col">
             {step === 1 && <RequestReset onEmailSent={handleEmailSubmitted} />}
             {step === 2 && (
-                <ResetOTP 
-                    email={resetData.email} 
-                    onBack={() => setStep(1)} 
-                    onVerifySuccess={handleOTPVerified} 
+                <ResetOTP
+                    email={resetData.email}
+                    onBack={() => setStep(1)}
+                    onVerifySuccess={handleOTPVerified}
                 />
             )}
             {step === 3 && (
-                <NewPassword 
-                    email={resetData.email} 
-                    otp={resetData.otp} 
-                    onComplete={() => window.location.href = '/signin'} 
+                <NewPassword
+                    email={resetData.email}
+                    otp={resetData.otp}
+                    onComplete={() => window.location.href = '/signin'}
                 />
             )}
         </div>

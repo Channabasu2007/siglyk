@@ -1,6 +1,6 @@
 import React from 'react'
-import PrimaryButton from '@/components/Buttons/PrimaryButton'
-import SecondaryButton from '@/components/Buttons/SecondaryButton'
+import PrimaryButton from '@/components/buttons/PrimaryButton'
+import SecondaryButton from '@/components/buttons/SecondaryButton'
 
 const LeftHeroSection = () => {
     return (

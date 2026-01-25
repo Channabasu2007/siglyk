@@ -1,19 +1,40 @@
 "use client";
 import React, { useState } from 'react';
-import PrimaryButton from '../../Buttons/PrimaryButton';
+import PrimaryButton from '../../buttons/PrimaryButton';
+import Loader from '@/components/ui/Loader'
 
-const NewPassword = ({ email, otp, onComplete }) => {
+const NewPassword = ({ email, onComplete }) => {
     const [formData, setFormData] = useState({ password: "", confirm: "" });
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true)
         if (formData.password !== formData.confirm) return setError("Passwords mismatch");
-        console.log("Updating password for:", email, otp, formData.password);
-        onComplete();
+        try {
+            const res = await fetch("/api/forgotPassword/changePassword", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, newPassword: formData.password }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                setError(data.message || "Failed to update password. Please try again.");
+                return;
+            }
+            onComplete();
+        } catch (error) {
+            setError(error.message)
+        }finally{
+            setIsLoading(false)
+        }
     };
+
+    if (isLoading) return <Loader /> 
 
     return (
         <main className="flex-1 flex flex-col items-center justify-center px-4">
@@ -22,11 +43,11 @@ const NewPassword = ({ email, otp, onComplete }) => {
                 <form className="space-y-5" onSubmit={handleSubmit}>
                     <div className="relative">
                         <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-light-secondary/50">lock</span>
-                        <input 
+                        <input
                             type={showPass ? "text" : "password"} required
                             className="w-full h-12 rounded-lg border border-light-secondary/30 pl-11 pr-11 text-sm"
                             placeholder="New Password"
-                            onChange={(e) => setFormData({...formData, password: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         />
                         <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-light-secondary/50" onClick={() => setShowPass(!showPass)}>
                             <span className="material-symbols-outlined">{showPass ? 'visibility_off' : 'visibility'}</span>
@@ -34,11 +55,11 @@ const NewPassword = ({ email, otp, onComplete }) => {
                     </div>
                     <div className="relative">
                         <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-light-secondary/50">lock_reset</span>
-                        <input 
+                        <input
                             type={showConfirmPass ? "text" : "password"} required
                             className="w-full h-12 rounded-lg border border-light-secondary/30 pl-11 pr-4 text-sm"
                             placeholder="Confirm New Password"
-                            onChange={(e) => setFormData({...formData, confirm: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, confirm: e.target.value })}
                         />
                         <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-light-secondary/50" onClick={() => setShowConfirmPass(!showConfirmPass)}>
                             <span className="material-symbols-outlined">{showConfirmPass ? 'visibility_off' : 'visibility'}</span>

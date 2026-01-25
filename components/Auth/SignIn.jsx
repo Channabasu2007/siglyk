@@ -1,24 +1,56 @@
 "use client";
 import React, { useState } from 'react';
-import PrimaryButton from '../Buttons/PrimaryButton';
-import SecondaryButton from '../Buttons/SecondaryButton';
+import PrimaryButton from '../buttons/PrimaryButton';
+import SecondaryButton from '../buttons/SecondaryButton';
+import { handleGoogleSignIn, handleEmailSignIn } from '@/controllers/authQuickActions.controller';
+import { useRouter } from 'next/navigation';
+import Loader from '@/components/ui/Loader';
 
 const SignIn = () => {
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: ""
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        setError("");
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Signing in with:", formData);
+        
+        setIsLoading(true);
+        setError("");
+        
+        try {
+            const result = await handleEmailSignIn(
+                formData.email,
+                formData.password,
+                '/translation'
+            );
+
+            if (!result.success) {
+                setError(result.error || "Sign-In failed. Please try again.");
+                return; // ✅ Stop here if error
+            }
+
+            // ✅ Only redirect on success
+            router.push("/translation");
+            
+        } catch (error) {
+            setError(error.message || "Sign-In failed. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+    if (isLoading) return <Loader />;
 
     return (
         <main className="flex-1 flex items-center justify-center p-6 bg-light-primary min-h-screen">
@@ -39,14 +71,15 @@ const SignIn = () => {
                             <label className="text-dark-primary text-sm font-medium">Email Address</label>
                             <div className="relative">
                                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-light-secondary/50 text-[20px]">mail</span>
-                                <input 
+                                <input
                                     name="email"
                                     type="email"
                                     required
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="flex w-full rounded-lg text-dark-primary focus:outline-0 focus:ring-2 focus:ring-light-secondary/20 border border-light-secondary/30 bg-light-primary h-14 pl-12 pr-4 text-base transition-all" 
-                                    placeholder="name@example.com" 
+                                    disabled={isLoading}
+                                    className="flex w-full rounded-lg text-dark-primary focus:outline-0 focus:ring-2 focus:ring-light-secondary/20 border border-light-secondary/30 bg-light-primary h-14 pl-12 pr-4 text-base transition-all disabled:opacity-50"
+                                    placeholder="name@example.com"
                                 />
                             </div>
                         </div>
@@ -58,16 +91,17 @@ const SignIn = () => {
                             </div>
                             <div className="relative">
                                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-light-secondary/50 text-[20px]">lock</span>
-                                <input 
+                                <input
                                     name="password"
-                                    type={showPassword ? "text" : "password"} 
+                                    type={showPassword ? "text" : "password"}
                                     required
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="flex w-full rounded-lg text-dark-primary focus:outline-0 focus:ring-2 focus:ring-light-secondary/20 border border-light-secondary/30 bg-light-primary h-14 pl-12 pr-12 text-base transition-all" 
-                                    placeholder="Enter your password" 
+                                    disabled={isLoading}
+                                    className="flex w-full rounded-lg text-dark-primary focus:outline-0 focus:ring-2 focus:ring-light-secondary/20 border border-light-secondary/30 bg-light-primary h-14 pl-12 pr-12 text-base transition-all disabled:opacity-50"
+                                    placeholder="Enter your password"
                                 />
-                                <button 
+                                <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-4 top-1/2 -translate-y-1/2 text-light-secondary/50 hover:text-light-secondary transition-colors"
@@ -78,11 +112,14 @@ const SignIn = () => {
                                 </button>
                             </div>
                         </div>
-
+                        
+                        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                        
                         <div className="pt-4">
-                            <PrimaryButton 
+                            <PrimaryButton
                                 type="submit"
-                                label="Sign In"
+                                label={isLoading ? "Signing in..." : "Sign In"}
+                                disabled={isLoading}
                                 className="w-full h-14 shadow-lg shadow-light-secondary/20"
                             />
                         </div>
@@ -97,9 +134,11 @@ const SignIn = () => {
                         </div>
                     </div>
 
-                    <div className="grid  gap-4">
-                        <SecondaryButton 
+                    <div className="grid gap-4">
+                        <SecondaryButton
+                            onClick={() => handleGoogleSignIn('/translation')}
                             label="Google"
+                            disabled={isLoading}
                             className="h-12"
                             icon={
                                 <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -110,7 +149,6 @@ const SignIn = () => {
                                 </svg>
                             }
                         />
-                        
                     </div>
                 </div>
 

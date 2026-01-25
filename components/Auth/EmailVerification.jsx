@@ -1,12 +1,16 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import PrimaryButton from "../Buttons/PrimaryButton";
+import PrimaryButton from "../buttons/PrimaryButton";
 import Loader from "@/components/ui/Loader";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation"
 
 const EmailVerification = ({ email, onBack, onVerifySuccess }) => {
+    const router = useRouter()
+    const { data: session, update } = useSession()
     const [otp, setOtp] = useState(new Array(6).fill(""));
     const [activeInput, setActiveInput] = useState(0);
-    const [timer, setTimer] = useState(120);
+    const [timer, setTimer] = useState(300);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const inputRefs = useRef([]);
@@ -42,13 +46,46 @@ const EmailVerification = ({ email, onBack, onVerifySuccess }) => {
         inputRefs.current[activeInput]?.focus();
     }, [activeInput]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const finalOtp = otp.join("");
-        if (finalOtp.length < 6) return setError("Please enter all 6 digits");
+    // ... inside EmailVerification component
+    const checkCode = async () => {
+        const enteredOtp = otp.join("");
+        if (enteredOtp.length < 6) return setError("Please enter all 6 digits");
+
+        setIsLoading(true);
         setError("");
-        console.log("Verifying OTP:", finalOtp);   
-        onVerifySuccess(finalOtp);
+
+        try {
+            const res = await fetch("/api/otp/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, otp: enteredOtp }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Verification failed");
+            }
+            await update()
+            await new Promise(resolve => setTimeout(resolve, 500));
+            router.refresh()
+
+            if (data.profileCompleted) {
+                router.push("/translation");
+            } else {
+                router.push("/profileDetails");
+            }
+
+        } catch (error) {
+            setError(error.message || "An error occurred during verification");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        checkCode(); // Just call the function
     };
 
     if (isLoading) return <Loader />;
@@ -103,17 +140,38 @@ const EmailVerification = ({ email, onBack, onVerifySuccess }) => {
 
                         <PrimaryButton type="submit" className="w-full h-14" label="Verify Email" />
 
-                        <div className="text-center">
-                            <p className="text-light-secondary/60 text-sm">
-                                Didn't receive the code?
+                        <div className="mt-8 pt-6 border-t border-light-secondary/10 text-center">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 dark:bg-amber-900/10 text-amber-700 dark:text-amber-400 mb-4">
+                                <span className="material-symbols-outlined text-[18px]">info</span>
+                                <p className="text-xs font-medium">Check your spam folder if it doesn't appear</p>
+                            </div>
+
+                            <div className="flex flex-col items-center gap-1">
+                                <p className="text-light-secondary/60 text-sm font-medium">
+                                    Didn't receive the code?
+                                </p>
                                 <button
+                                    onClick={() => onBack()}
                                     type="button"
                                     disabled={timer > 0}
-                                    className={`ml-1 font-bold ${timer > 0 ? 'text-light-secondary/40' : 'text-light-secondary hover:underline cursor-pointer'}`}
+                                    className={`group flex items-center gap-2 text-sm font-bold transition-all ${timer > 0
+                                        ? 'text-light-secondary/30 cursor-not-allowed'
+                                        : 'text-light-secondary hover:text-dark-primary cursor-pointer'
+                                        }`}
                                 >
-                                    {timer > 0 ? `Resend in ${timer}s` : "Resend Code"}
+                                    {timer > 0 ? (
+                                        <span className="flex items-center gap-2">
+                                            <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
+                                            Resend available in {timer}s
+                                        </span>
+                                    ) : (
+                                        <span className="flex items-center gap-1">
+                                            Resend Code
+                                            <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">chevron_right</span>
+                                        </span>
+                                    )}
                                 </button>
-                            </p>
+                            </div>
                         </div>
                     </form>
                 </div>

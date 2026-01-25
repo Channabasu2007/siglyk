@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
-import PrimaryButton from "@/components/Buttons/PrimaryButton";
-import SecondaryButton from "@/components/Buttons/SecondaryButton";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
+import SecondaryButton from "@/components/buttons/SecondaryButton";
 import { usePageName } from "@/hooks/usePageName";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { handleSignOut } from "@/controllers/authQuickActions.controller";
 
 const MobileNavbar = () => {
+  const { data: session, status } = useSession();
   const pageName = usePageName();
   const router = useRouter();
   const isAuthPage = pageName === "signin" || pageName === "signup" || pageName === "forgotPassword";
@@ -23,7 +26,23 @@ const MobileNavbar = () => {
 
       {/* Actions */}
       <div className="flex items-center gap-2">
-        {!isAuthPage ? (<><PrimaryButton label="Sign Up" onClick={() => (router.push("/signup"))} /><SecondaryButton label="Sign In" onClick={() => (router.push("/signin"))} /></>) : (<><span className="opacity-70 hidden sm:inline">Need Help?</span><SecondaryButton label="Contact Support" onClick={() => (router.push("/support"))} /> </>)}
+        {!isAuthPage ? (
+          status === "authenticated" ? (
+            <>
+              <SecondaryButton label="Sign Out" onClick={() => handleSignOut()} />
+            </>
+          ) : (
+            <>
+              <PrimaryButton label="Sign Up" onClick={() => (router.push("/signup"))} />
+              <SecondaryButton label="Sign In" onClick={() => (router.push("/signin"))} />
+            </>
+          )
+        ) : (
+          <>
+            <span className="opacity-70 hidden sm:inline">Need Help?</span>
+            <SecondaryButton label="Contact Support" onClick={() => (router.push("/support"))} />
+          </>
+        )}
       </div>
     </nav>
   );
