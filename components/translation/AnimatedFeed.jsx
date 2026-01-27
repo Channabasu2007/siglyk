@@ -23,14 +23,14 @@ const AnimationFeed = ({ isLive, onToggle }) => {
         </div>
 
         {/* Overlay HUD */}
-        <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-          <span className="material-symbols-outlined text-white text-[16px]">record_voice_over</span>
-          <span className="text-[10px] text-white font-black uppercase tracking-widest">Speech Listener</span>
+        <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-light-primary/10">
+          <span className="material-symbols-outlined text-light-primary text-[16px]">record_voice_over</span>
+          <span className="text-[10px] text-light-primary font-black uppercase tracking-widest">Speech Listener</span>
         </div>
 
         {!isLive && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">Avatar Ready</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-light-primary/60">Avatar Ready</p>
           </div>
         )}
       </div>

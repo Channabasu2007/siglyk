@@ -17,6 +17,14 @@ const TranslationPage = () => {
   const [targetLang, setTargetLang] = useState("English (US)");
   const [mode, setMode] = useState('S2T');
 
+  const toggleMode = () => {
+    setMode(prev => (prev === 'S2T' ? 'T2S' : 'S2T'));
+    const temp = sourceLang;
+    setSourceLang(targetLang);
+    setTargetLang(temp);
+    setIsLive(false); // Safety: Stop feeds when switching modes
+  };
+
   return (
     <div className="min-h-screen w-full lg:w-[80vw] mx-auto bg-light-primary font-sans flex flex-col transition-colors duration-300">
 
@@ -30,6 +38,8 @@ const TranslationPage = () => {
             setSource={setSourceLang}
             target={targetLang}
             setTarget={setTargetLang}
+            mode={mode}       // Add this
+            onToggle={toggleMode}
           />
         </section>
 
@@ -51,7 +61,10 @@ const TranslationPage = () => {
           {/* Right Side: Transcription & Controls (Spans 5 columns on LG) */}
           <div className="lg:col-span-5 flex flex-col gap-6 h-full">
             <TranscriptionBox messages={transcript} isLive={isLive} />
-            <WorkspaceControls />
+            <WorkspaceControls
+              mode={mode}       // Add this
+              onToggle={toggleMode}
+            />
           </div>
         </div>
 
