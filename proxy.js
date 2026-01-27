@@ -3,7 +3,9 @@ import { getToken } from "next-auth/jwt";
 
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
-
+  if (pathname === "/translation" || pathname.startsWith("/_next") || pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
   // ✅ Always allow API routes
   if (pathname.startsWith("/api")) {
     return NextResponse.next();
