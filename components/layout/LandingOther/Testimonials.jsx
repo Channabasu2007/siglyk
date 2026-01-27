@@ -22,7 +22,7 @@ const Testimonials = () => {
           {testimonials.map((item, index) => (
             <div 
               key={index} 
-              className="bg-white p-8 rounded-3xl shadow-sm border border-light-secondary/10 flex flex-col hover:shadow-xl hover:shadow-light-secondary/5 transition-all duration-300"
+              className="bg-light-primary p-8 rounded-3xl shadow-sm border border-light-secondary/10 flex flex-col hover:shadow-xl hover:shadow-light-secondary/5 transition-all duration-300"
             >
               <div className="flex gap-1 text-yellow-400 mb-6">
                 {[...Array(item.rating)].map((_, i) => (

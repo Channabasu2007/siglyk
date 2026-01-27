@@ -20,7 +20,7 @@ const CTA = () => {
                     </div>
 
                     <div className="flex justify-center w-full relative z-10">
-                        {/* Using a white version of your primary button logic */}
+                        {/* Using a light-primary version of your primary button logic */}
                         <SecondaryButton label="Start Free Trial" className='scale-170 shadow-2xl hover:scale-180 transition-transform duration-500 shadow-dark-primary' />
                     </div>
                 </div>

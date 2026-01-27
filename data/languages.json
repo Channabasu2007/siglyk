@@ -1,0 +1,12 @@
+[
+  { "id": "en-US", "label": "English (US)" },
+  { "id": "es-ES", "label": "Spanish (Spain)" },
+  { "id": "fr-FR", "label": "French (France)" },
+  { "id": "de-DE", "label": "German (Germany)" },
+  { "id": "hi-IN", "label": "Hindi (India)" },
+  { "id": "zh-CN", "label": "Mandarin Chinese" },
+  { "id": "ja-JP", "label": "Japanese (Japan)" },
+  { "id": "pt-BR", "label": "Portuguese (Brazil)" },
+  { "id": "ar-SA", "label": "Arabic (Saudi Arabia)" },
+  { "id": "ru-RU", "label": "Russian (Russia)" }
+]

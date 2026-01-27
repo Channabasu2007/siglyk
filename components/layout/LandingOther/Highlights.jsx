@@ -25,9 +25,9 @@ const Highlights = () => {
                     {highlights.map((feature, index) => (
                         <div 
                             key={index} 
-                            className="p-8 rounded-3xl bg-white border border-light-secondary/10 hover:border-light-secondary/30 hover:shadow-2xl hover:shadow-light-secondary/10 transition-all duration-300 flex flex-col gap-5 group"
+                            className="p-8 rounded-3xl bg-light-primary border border-light-secondary/10 hover:border-light-secondary/30 hover:shadow-2xl hover:shadow-light-secondary/10 transition-all duration-300 flex flex-col gap-5 group"
                         >
-                            <div className="w-14 h-14 rounded-2xl bg-light-secondary/10 flex items-center justify-center text-light-secondary group-hover:bg-light-secondary group-hover:text-white transition-all duration-300">
+                            <div className="w-14 h-14 rounded-2xl bg-light-secondary/10 flex items-center justify-center text-light-secondary group-hover:bg-light-secondary group-hover:text-light-primary transition-all duration-300">
                                 <span className="material-symbols-outlined text-3xl">
                                     {feature.icon}
                                 </span>

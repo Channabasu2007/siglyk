@@ -5,7 +5,6 @@ import CameraFeed from '@/components/translation/CameraFeed';
 import TranscriptionBox from '@/components/translation/TranscriptionBox';
 import WorkspaceControls from '@/components/translation/WorkspaceControls';
 import SessionHistory from '@/components/translation/SessionHistory';
-import AnimationFeed from '@/components/translation/AnimatedFeed';
 
 const TranslationPage = () => {
   const [isLive, setIsLive] = useState(false);
@@ -15,35 +14,30 @@ const TranslationPage = () => {
   ]);
   const [sourceLang, setSourceLang] = useState("ASL");
   const [targetLang, setTargetLang] = useState("English (US)");
-  const [mode, setMode] = useState('S2T');
 
   return (
     <div className="min-h-screen w-full lg:w-[80vw] mx-auto bg-light-primary font-sans flex flex-col transition-colors duration-300">
-
+      
       {/* Main Container: Controlled width for desktop, full for mobile */}
       <main className="flex-1 w-full max-w-350 mx-auto p-4 lg:p-8 flex flex-col gap-6">
-
+        
         {/* Top Section: Selectors (Usually full width) */}
         <section className="w-full">
-          <TranslationSelectors
-            source={sourceLang}
-            setSource={setSourceLang}
-            target={targetLang}
-            setTarget={setTargetLang}
-          />
+            <TranslationSelectors 
+              source={sourceLang} 
+              setSource={setSourceLang}
+              target={targetLang}
+              setTarget={setTargetLang}
+            />
         </section>
 
         {/* Middle Section: Responsive Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-start">
-
+          
           {/* Left Side: Camera (Spans 7 columns on LG) */}
           <div className="lg:col-span-7 flex flex-col gap-4">
-
-            {mode === 'S2T' ? (
-              <CameraFeed isLive={isLive} onToggle={() => setIsLive(!isLive)} />
-            ) : (
-              <AnimationFeed isLive={isLive} onToggle={() => setIsLive(!isLive)} />
-            )}
+            <CameraFeed isLive={isLive} onToggle={() => setIsLive(!isLive)} />
+            
             {/* Desktop-only placement for secondary controls could go here, 
                 but keeping them modular for now */}
           </div>
@@ -57,7 +51,7 @@ const TranslationPage = () => {
 
         {/* Bottom Section: History (Full width) */}
         <section className="w-full">
-          <SessionHistory />
+           <SessionHistory />
         </section>
       </main>
     </div>
